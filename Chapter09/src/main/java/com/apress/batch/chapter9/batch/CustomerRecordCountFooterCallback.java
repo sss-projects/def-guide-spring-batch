@@ -42,14 +42,14 @@ public class CustomerRecordCountFooterCallback implements FlatFileFooterCallback
 				itemsWrittenInCurrentFile + " items");
 	}
 
-	@Before("execution(* org.springframework.batch.item.file.FlatFileItemWriter.write(..))")
+	@Before("execution(* org.springframework.batch.item.support.AbstractFileItemWriter.write(..))")
 	public void beforeWrite(JoinPoint joinPoint) {
 		List<Customer> items = (List<Customer>) joinPoint.getArgs()[0];
 
 		this.itemsWrittenInCurrentFile += items.size();
 	}
 
-	@Before("execution(* org.springframework.batch.item.file.FlatFileItemWriter.open(..))")
+	@Before("execution(* org.springframework.batch.item.support.AbstractFileItemWriter.open(..))")
 	public void resetCounter() {
 		this.itemsWrittenInCurrentFile = 0;
 	}

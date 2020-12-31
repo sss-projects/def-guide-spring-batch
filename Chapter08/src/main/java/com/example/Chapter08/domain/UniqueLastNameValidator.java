@@ -16,6 +16,7 @@
 package com.example.Chapter08.domain;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.springframework.batch.item.ExecutionContext;
@@ -41,7 +42,13 @@ public class UniqueLastNameValidator extends ItemStreamSupport implements Valida
 
 	@Override
 	public void update(ExecutionContext executionContext) {
-		executionContext.put(getExecutionContextKey("lastNames"), this.lastNames);
+		Iterator<String> itr = lastNames.iterator();
+		Set<String> copiedLastNames = new HashSet<String>();
+		while(itr.hasNext()) {
+			copiedLastNames.add(itr.next());
+		}
+		
+		executionContext.put(getExecutionContextKey("lastNames"), copiedLastNames);
 	}
 
 	@Override
